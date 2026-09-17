@@ -1,8 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="SprintBoard">
   <style>
-    /* The mark inverts with the theme: dark tile with light bars in light mode,
-       light tile with dark bars in dark mode. The bolt keeps its colours in
-       both, because it always sits on a bar of the opposite tone. */
     .tile { fill: #181818; }
     .bar  { fill: #fcfcfc; }
 
