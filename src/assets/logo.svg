@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="SprintBoard">
+  <style>
+    /* The mark inverts with the theme: dark tile with light bars in light mode,
+       light tile with dark bars in dark mode. The bolt keeps its colours in
+       both, because it always sits on a bar of the opposite tone. */
+    .tile { fill: #181818; }
+    .bar  { fill: #fcfcfc; }
+
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #f2f1ee; }
+      .bar  { fill: #181818; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f67d0e" />
+      <stop offset="1" stop-color="#f6b40e" />
+    </linearGradient>
+  </defs>
+
+  <rect class="tile" x="0" y="0" width="64" height="64" rx="12.1" />
+
+  <rect class="bar" x="10.4" y="22.7" width="12.8" height="30.6" rx="2" />
+  <rect class="bar" x="25.6" y="31.1" width="12.6" height="22.2" rx="2" />
+  <rect class="bar" x="40.5" y="11.9" width="13.1" height="41.4" rx="2" />
+
+  <path fill="url(#bolt)" d="M48.9 15.0 L42.7 22.6 L45.9 22.6 L44.5 28.9 L50.7 21.3 L47.5 21.3 Z" />
+</svg>
