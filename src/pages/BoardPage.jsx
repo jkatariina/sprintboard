@@ -1,5 +1,7 @@
+import Board from '../components/board/Board.jsx'
+
 function BoardPage() {
-  return null
+  return <Board />
 }
 
 export default BoardPage
