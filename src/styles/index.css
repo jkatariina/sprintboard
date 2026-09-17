@@ -1,11 +1,29 @@
+/* Colours are taken from the logo: near-black #181818, off-white #f2f1ee and
+   the bolt gradient #f67d0e - #f6b40e. Every token is defined for both themes,
+   so components only ever reference var(--color-*) and never a literal colour. */
 :root {
-  --color-bg: #f4f5f7;
+  color-scheme: light dark;
+
+  --color-bg: #f2f1ee;
   --color-surface: #ffffff;
-  --color-border: #dfe1e6;
-  --color-text: #172b4d;
-  --color-text-muted: #5e6c84;
-  --color-accent: #0052cc;
-  --color-danger: #de350b;
+  --color-surface-muted: #f7f6f4;
+  --color-border: #e2e0db;
+
+  --color-text: #181818;
+  --color-text-muted: #5f5c57;
+
+  /* The bolt orange is too light for text on white, so links and labels use a
+     darkened version while fills keep the brand colour. */
+  --color-accent: #9c5204;
+  --color-accent-fill: #f67d0e;
+  --color-accent-contrast: #181818;
+  --color-accent-soft: #fdf0df;
+
+  --color-danger: #a3231b;
+  --color-danger-fill: #c9342a;
+  --color-danger-soft: #fceceb;
+
+  --color-focus: #f67d0e;
 
   --radius: 6px;
   --space-sm: 0.5rem;
@@ -16,6 +34,29 @@
   line-height: 1.5;
   color: var(--color-text);
   background-color: var(--color-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #141414;
+    --color-surface: #1e1e1e;
+    --color-surface-muted: #262626;
+    --color-border: #363636;
+
+    --color-text: #f2f1ee;
+    --color-text-muted: #a5a29d;
+
+    --color-accent: #f6b40e;
+    --color-accent-fill: #f6b40e;
+    --color-accent-contrast: #181818;
+    --color-accent-soft: #33260c;
+
+    --color-danger: #f28b82;
+    --color-danger-fill: #c9342a;
+    --color-danger-soft: #3a1a17;
+
+    --color-focus: #f6b40e;
+  }
 }
 
 *,
@@ -39,6 +80,11 @@ p {
 button {
   font: inherit;
   cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
 
 .page {
