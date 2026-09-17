@@ -1,0 +1,40 @@
+.header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-md);
+}
+
+.brand {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.link {
+  padding: 0.25rem var(--space-sm);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}

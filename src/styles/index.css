@@ -40,3 +40,7 @@ button {
   font: inherit;
   cursor: pointer;
 }
+
+.page {
+  padding: var(--space-lg) var(--space-md);
+}
