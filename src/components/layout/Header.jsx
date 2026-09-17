@@ -16,7 +16,7 @@ function Header() {
         </Link>
 
         <nav className={styles.nav} aria-label="Main">
-          <NavLink to="/importera" className={navLinkClass}>
+          <NavLink to="/import" className={navLinkClass}>
             Import
           </NavLink>
         </nav>

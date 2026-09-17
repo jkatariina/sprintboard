@@ -12,7 +12,7 @@ function App() {
       <main className="page">
         <Routes>
           <Route path="/" element={<BoardPage />} />
-          <Route path="/importera" element={<ImportPage />} />
+          <Route path="/import" element={<ImportPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

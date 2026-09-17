@@ -39,7 +39,7 @@
 }
 
 .link:hover {
-  background-color: var(--color-bg);
+  background-color: var(--color-surface-muted);
   color: var(--color-text);
 }
 
