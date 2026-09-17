@@ -1,6 +1,3 @@
-/* Colours are taken from the logo: near-black #181818, off-white #f2f1ee and
-   the bolt gradient #f67d0e - #f6b40e. Every token is defined for both themes,
-   so components only ever reference var(--color-*) and never a literal colour. */
 :root {
   color-scheme: light dark;
 
@@ -12,8 +9,6 @@
   --color-text: #181818;
   --color-text-muted: #5f5c57;
 
-  /* The bolt orange is too light for text on white, so links and labels use a
-     darkened version while fills keep the brand colour. */
   --color-accent: #9c5204;
   --color-accent-fill: #f67d0e;
   --color-accent-contrast: #181818;
