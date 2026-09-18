@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
+import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './ColumnForm.module.css'
 
 function ColumnForm({ columns, onAdd }) {
@@ -10,23 +11,14 @@ function ColumnForm({ columns, onAdd }) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    const name = title.trim()
+    const message = validateColumnTitle(title, columns)
 
-    if (name === '') {
-      setError('Give the column a name')
+    if (message) {
+      setError(message)
       return
     }
 
-    const alreadyExists = columns.some(
-      (column) => column.toLowerCase() === name.toLowerCase(),
-    )
-
-    if (alreadyExists) {
-      setError(`There is already a column called ${name}`)
-      return
-    }
-
-    onAdd(name)
+    onAdd(title.trim())
     setTitle('')
     setError('')
   }
@@ -37,6 +29,7 @@ function ColumnForm({ columns, onAdd }) {
         className={styles.input}
         value={title}
         onChange={(event) => setTitle(event.target.value)}
+        onBlur={() => setError('')}
         placeholder="Column name"
         aria-label="Column name"
       />

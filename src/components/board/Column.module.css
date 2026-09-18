@@ -6,11 +6,42 @@
   background-color: var(--color-surface-muted);
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
 .title {
-  margin: 0;
+  display: block;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: none;
+  text-align: left;
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+}
+
+.title:hover {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.input {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-accent-fill);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
