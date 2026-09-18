@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
+import Modal from '../ui/Modal.jsx'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
-function Column({ column, columns, onRename }) {
+function Column({ column, columns, onRename, onDelete }) {
   const [isEditing, setIsEditing] = useState(false)
+  const [isConfirming, setIsConfirming] = useState(false)
   const [title, setTitle] = useState(column.title)
   const [error, setError] = useState('')
 
@@ -41,6 +44,11 @@ function Column({ column, columns, onRename }) {
     }
   }
 
+  function confirmDelete() {
+    setIsConfirming(false)
+    onDelete(column.id)
+  }
+
   return (
     <section className={styles.column}>
       {isEditing ? (
@@ -58,10 +66,36 @@ function Column({ column, columns, onRename }) {
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </form>
       ) : (
-        <button type="button" className={styles.title} onClick={startEditing}>
-          {column.title}
-        </button>
+        <div className={styles.header}>
+          <button type="button" className={styles.title} onClick={startEditing}>
+            {column.title}
+          </button>
+
+          <button
+            type="button"
+            className={styles.delete}
+            onClick={() => setIsConfirming(true)}
+            aria-label={`Delete ${column.title}`}
+          >
+            ×
+          </button>
+        </div>
       )}
+
+      <Modal
+        isOpen={isConfirming}
+        onClose={() => setIsConfirming(false)}
+        title={`Delete ${column.title}?`}
+      >
+        <p>The column will be removed from the board.</p>
+
+        <div className={styles.actions}>
+          <Button onClick={() => setIsConfirming(false)}>Cancel</Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Delete column
+          </Button>
+        </div>
+      </Modal>
     </section>
   )
 }

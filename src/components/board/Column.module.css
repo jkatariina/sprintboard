@@ -12,9 +12,39 @@
   gap: var(--space-sm);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.delete {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.delete:hover {
+  background-color: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
 .title {
   display: block;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   padding: 0.25rem 0.5rem;
   border: 1px solid transparent;
   border-radius: var(--radius);

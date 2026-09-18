@@ -23,6 +23,10 @@ function Board() {
     )
   }
 
+  function deleteColumn(id) {
+    setColumns(columns.filter((column) => column.id !== id))
+  }
+
   return (
     <div className={styles.board}>
       {columns.map((column) => (
@@ -31,6 +35,7 @@ function Board() {
           column={column}
           columns={columns}
           onRename={renameColumn}
+          onDelete={deleteColumn}
         />
       ))}
 
