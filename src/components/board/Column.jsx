@@ -1,11 +1,13 @@
 import { useState } from 'react'
+import Card from './Card.jsx'
+import CardComposer from './CardComposer.jsx'
 import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
 import Modal from '../ui/Modal.jsx'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
-function Column({ column, columns, onRename, onDelete }) {
+function Column({ column, columns, cards, onRename, onDelete, onAddCard }) {
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
   const [title, setTitle] = useState(column.title)
@@ -81,6 +83,14 @@ function Column({ column, columns, onRename, onDelete }) {
           </button>
         </div>
       )}
+
+      <div className={styles.cards}>
+        {cards.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
+      </div>
+
+      <CardComposer onAdd={(title) => onAddCard(column.id, title)} />
 
       <Modal
         isOpen={isConfirming}

@@ -6,7 +6,19 @@
   background-color: var(--color-surface-muted);
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
 .form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.cards {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
