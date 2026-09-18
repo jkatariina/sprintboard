@@ -74,6 +74,10 @@ function Board() {
     setCards([...cards, { id: crypto.randomUUID(), columnId, title }])
   }
 
+  function deleteCard(id) {
+    setCards(cards.filter((card) => card.id !== id))
+  }
+
   function updateCard(id, changes) {
     setCards(cards.map((card) => (card.id === id ? { ...card, ...changes } : card)))
   }
@@ -90,6 +94,7 @@ function Board() {
           onDelete={deleteColumn}
           onAddCard={addCard}
           onUpdateCard={updateCard}
+          onDeleteCard={deleteCard}
         />
       ))}
 

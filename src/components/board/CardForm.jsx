@@ -3,7 +3,7 @@ import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
 import styles from './CardForm.module.css'
 
-function CardForm({ card, onSave, onCancel }) {
+function CardForm({ card, onSave, onDelete, onCancel }) {
   const [title, setTitle] = useState(card.title)
   const [description, setDescription] = useState(card.description ?? '')
   const [label, setLabel] = useState(card.label ?? '')
@@ -82,10 +82,16 @@ function CardForm({ card, onSave, onCancel }) {
       {error && <ErrorMessage>{error}</ErrorMessage>}
 
       <div className={styles.actions}>
-        <Button onClick={onCancel}>Cancel</Button>
-        <Button type="submit" variant="primary">
-          Save
+        <Button variant="danger" onClick={onDelete}>
+          Delete
         </Button>
+
+        <div className={styles.right}>
+          <Button onClick={onCancel}>Cancel</Button>
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
+        </div>
       </div>
     </form>
   )

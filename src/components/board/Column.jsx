@@ -15,6 +15,7 @@ function Column({
   onDelete,
   onAddCard,
   onUpdateCard,
+  onDeleteCard,
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
@@ -98,6 +99,7 @@ function Column({
             key={card.id}
             card={card}
             onUpdate={onUpdateCard}
+            onDelete={onDeleteCard}
           />
         ))}
       </div>
