@@ -16,6 +16,9 @@ function Column({
   onAddCard,
   onUpdateCard,
   onDeleteCard,
+  onMoveCard,
+  isFirst,
+  isLast,
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
@@ -100,6 +103,9 @@ function Column({
             card={card}
             onUpdate={onUpdateCard}
             onDelete={onDeleteCard}
+            onMove={onMoveCard}
+            canMoveLeft={!isFirst}
+            canMoveRight={!isLast}
           />
         ))}
       </div>

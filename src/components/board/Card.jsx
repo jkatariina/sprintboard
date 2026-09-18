@@ -7,11 +7,9 @@ import CardForm from './CardForm.jsx'
 import { isOverdue } from '../../utils/dates.js'
 import styles from './Card.module.css'
 
-function Card({ card, onUpdate, onDelete }) {
+function Card({ card, canMoveLeft, canMoveRight, onUpdate, onDelete, onMove }) {
   const [isOpen, setIsOpen] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
-
-  const hasDetails = card.label || card.assignee || card.dueDate
 
   function close() {
     setIsOpen(false)
@@ -29,40 +27,56 @@ function Card({ card, onUpdate, onDelete }) {
   }
 
   return (
-    <>
+    <article className={styles.card}>
       <button
         type="button"
-        className={styles.card}
+        className={styles.open}
         onClick={() => setIsOpen(true)}
       >
         <span className={styles.title}>{card.title}</span>
 
-        {hasDetails && (
-          <span className={styles.details}>
-            {card.label && (
-              <span className={styles.row}>
-                <Badge variant="accent">{card.label}</Badge>
-              </span>
-            )}
+        {(card.label || card.assignee) && (
+          <span className={styles.row}>
+            {card.label && <Badge variant="accent">{card.label}</Badge>}
 
-            {(card.dueDate || card.assignee) && (
-              <span className={styles.row}>
-                {card.dueDate && (
-                  <Badge variant={isOverdue(card.dueDate) ? 'danger' : 'neutral'}>
-                    {card.dueDate}
-                  </Badge>
-                )}
-
-                {card.assignee && (
-                  <span className={styles.assignee}>
-                    <Avatar name={card.assignee} />
-                  </span>
-                )}
+            {card.assignee && (
+              <span className={styles.assignee}>
+                <Avatar name={card.assignee} />
               </span>
             )}
           </span>
         )}
       </button>
+
+      <div className={styles.moves}>
+        {card.dueDate && (
+          <Badge variant={isOverdue(card.dueDate) ? 'danger' : 'neutral'}>
+            {card.dueDate}
+          </Badge>
+        )}
+
+        <span className={styles.arrows}>
+          <button
+            type="button"
+            className={styles.move}
+            onClick={() => onMove(card.id, -1)}
+            disabled={!canMoveLeft}
+            aria-label={`Move ${card.title} to the previous column`}
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            className={styles.move}
+            onClick={() => onMove(card.id, 1)}
+            disabled={!canMoveRight}
+            aria-label={`Move ${card.title} to the next column`}
+          >
+            ›
+          </button>
+        </span>
+      </div>
 
       <Modal
         isOpen={isOpen}
@@ -89,7 +103,7 @@ function Card({ card, onUpdate, onDelete }) {
           />
         )}
       </Modal>
-    </>
+    </article>
   )
 }
 

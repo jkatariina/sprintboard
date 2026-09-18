@@ -1,15 +1,9 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  width: 100%;
-  padding: 0.75rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background-color: var(--color-surface);
-  text-align: left;
-  font: inherit;
-  font-size: 0.875rem;
   color: var(--color-text);
 }
 
@@ -17,17 +11,73 @@
   border-color: var(--color-accent-fill);
 }
 
-.title {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
-.details {
+.open {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  font-size: 0.875rem;
+  color: inherit;
+}
+
+.moves {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  padding: 0 0.5rem 0.5rem;
+}
+
+.arrows {
+  display: flex;
+  gap: 0.125rem;
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.card:hover .arrows,
+.arrows:focus-within {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrows {
+    transition: none;
+  }
+}
+
+.move {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.move:hover:not(:disabled) {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.move:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 .row {
