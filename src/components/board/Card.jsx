@@ -4,6 +4,7 @@ import Badge from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
 import Modal from '../ui/Modal.jsx'
 import CardForm from './CardForm.jsx'
+import { isOverdue } from '../../utils/dates.js'
 import styles from './Card.module.css'
 
 function Card({ card, onUpdate, onDelete }) {
@@ -46,7 +47,11 @@ function Card({ card, onUpdate, onDelete }) {
 
             {(card.dueDate || card.assignee) && (
               <span className={styles.row}>
-                {card.dueDate && <Badge>{card.dueDate}</Badge>}
+                {card.dueDate && (
+                  <Badge variant={isOverdue(card.dueDate) ? 'danger' : 'neutral'}>
+                    {card.dueDate}
+                  </Badge>
+                )}
 
                 {card.assignee && (
                   <span className={styles.assignee}>
