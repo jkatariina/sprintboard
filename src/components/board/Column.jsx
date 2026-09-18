@@ -7,7 +7,15 @@ import Modal from '../ui/Modal.jsx'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
-function Column({ column, columns, cards, onRename, onDelete, onAddCard }) {
+function Column({
+  column,
+  columns,
+  cards,
+  onRename,
+  onDelete,
+  onAddCard,
+  onUpdateCard,
+}) {
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
   const [title, setTitle] = useState(column.title)
@@ -86,7 +94,11 @@ function Column({ column, columns, cards, onRename, onDelete, onAddCard }) {
 
       <div className={styles.cards}>
         {cards.map((card) => (
-          <Card key={card.id} card={card} />
+          <Card
+            key={card.id}
+            card={card}
+            onUpdate={onUpdateCard}
+          />
         ))}
       </div>
 

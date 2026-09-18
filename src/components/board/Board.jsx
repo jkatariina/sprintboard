@@ -74,6 +74,10 @@ function Board() {
     setCards([...cards, { id: crypto.randomUUID(), columnId, title }])
   }
 
+  function updateCard(id, changes) {
+    setCards(cards.map((card) => (card.id === id ? { ...card, ...changes } : card)))
+  }
+
   return (
     <div className={styles.board}>
       {columns.map((column) => (
@@ -85,6 +89,7 @@ function Board() {
           onRename={renameColumn}
           onDelete={deleteColumn}
           onAddCard={addCard}
+          onUpdateCard={updateCard}
         />
       ))}
 
