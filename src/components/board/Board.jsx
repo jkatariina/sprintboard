@@ -78,13 +78,25 @@ function Board() {
     setCards(cards.filter((card) => card.id !== id))
   }
 
+  function moveCard(id, direction) {
+    const card = cards.find((item) => item.id === id)
+    const index = columns.findIndex((column) => column.id === card.columnId)
+    const target = columns[index + direction]
+
+    if (!target) {
+      return
+    }
+
+    updateCard(id, { columnId: target.id })
+  }
+
   function updateCard(id, changes) {
     setCards(cards.map((card) => (card.id === id ? { ...card, ...changes } : card)))
   }
 
   return (
     <div className={styles.board}>
-      {columns.map((column) => (
+      {columns.map((column, index) => (
         <Column
           key={column.id}
           column={column}
@@ -95,6 +107,9 @@ function Board() {
           onAddCard={addCard}
           onUpdateCard={updateCard}
           onDeleteCard={deleteCard}
+          onMoveCard={moveCard}
+          isFirst={index === 0}
+          isLast={index === columns.length - 1}
         />
       ))}
 
