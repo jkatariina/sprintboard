@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'motion/react'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
@@ -27,7 +28,14 @@ function Card({ card, canMoveLeft, canMoveRight, onUpdate, onDelete, onMove }) {
   }
 
   return (
-    <article className={styles.card}>
+    <motion.article
+      layout
+      className={styles.card}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.18 }}
+    >
       <button
         type="button"
         className={styles.open}
@@ -103,7 +111,7 @@ function Card({ card, canMoveLeft, canMoveRight, onUpdate, onDelete, onMove }) {
           />
         )}
       </Modal>
-    </article>
+    </motion.article>
   )
 }
 

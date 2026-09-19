@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import Card from './Card.jsx'
 import CardComposer from './CardComposer.jsx'
 import Button from '../ui/Button.jsx'
@@ -65,7 +66,7 @@ function Column({
   }
 
   return (
-    <section className={styles.column}>
+    <motion.section layout className={styles.column}>
       {isEditing ? (
         <form className={styles.form} onSubmit={save}>
           <input
@@ -120,7 +121,8 @@ function Column({
       )}
 
       <div className={styles.cards}>
-        {cards.map((card) => (
+        <AnimatePresence initial={false}>
+          {cards.map((card) => (
           <Card
             key={card.id}
             card={card}
@@ -130,7 +132,8 @@ function Column({
             canMoveLeft={!isFirst}
             canMoveRight={!isLast}
           />
-        ))}
+          ))}
+        </AnimatePresence>
       </div>
 
       <CardComposer onAdd={(title) => onAddCard(column.id, title)} />
@@ -149,7 +152,7 @@ function Column({
           </Button>
         </div>
       </Modal>
-    </section>
+    </motion.section>
   )
 }
 
