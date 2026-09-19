@@ -65,6 +65,20 @@ function Board() {
     )
   }
 
+  function moveColumn(id, direction) {
+    const index = columns.findIndex((column) => column.id === id)
+    const target = index + direction
+
+    if (target < 0 || target >= columns.length) {
+      return
+    }
+
+    const next = [...columns]
+    next[index] = columns[target]
+    next[target] = columns[index]
+    setColumns(next)
+  }
+
   function deleteColumn(id) {
     setColumns(columns.filter((column) => column.id !== id))
     setCards(cards.filter((card) => card.columnId !== id))
@@ -108,6 +122,7 @@ function Board() {
           onUpdateCard={updateCard}
           onDeleteCard={deleteCard}
           onMoveCard={moveCard}
+          onMove={moveColumn}
           isFirst={index === 0}
           isLast={index === columns.length - 1}
         />

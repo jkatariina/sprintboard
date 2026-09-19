@@ -33,7 +33,24 @@
   gap: 0.25rem;
 }
 
-.delete {
+.arrows {
+  display: flex;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.column:hover .arrows,
+.arrows:focus-within {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrows {
+    transition: none;
+  }
+}
+
+.action {
   flex-shrink: 0;
   width: 1.75rem;
   height: 1.75rem;
@@ -45,7 +62,17 @@
   line-height: 1;
 }
 
-.delete:hover {
+.action:hover:not(:disabled) {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.action:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.delete:hover:not(:disabled) {
   background-color: var(--color-danger-soft);
   color: var(--color-danger);
 }

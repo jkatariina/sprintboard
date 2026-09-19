@@ -17,6 +17,7 @@ function Column({
   onUpdateCard,
   onDeleteCard,
   onMoveCard,
+  onMove,
   isFirst,
   isLast,
 }) {
@@ -85,9 +86,31 @@ function Column({
             {column.title}
           </button>
 
+          <span className={styles.arrows}>
+            <button
+              type="button"
+              className={styles.action}
+              onClick={() => onMove(column.id, -1)}
+              disabled={isFirst}
+              aria-label={`Move ${column.title} left`}
+            >
+              ‹
+            </button>
+
+            <button
+              type="button"
+              className={styles.action}
+              onClick={() => onMove(column.id, 1)}
+              disabled={isLast}
+              aria-label={`Move ${column.title} right`}
+            >
+              ›
+            </button>
+          </span>
+
           <button
             type="button"
-            className={styles.delete}
+            className={`${styles.action} ${styles.delete}`}
             onClick={() => setIsConfirming(true)}
             aria-label={`Delete ${column.title}`}
           >
