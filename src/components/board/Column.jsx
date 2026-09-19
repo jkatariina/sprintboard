@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence } from 'motion/react'
 import Card from './Card.jsx'
 import CardComposer from './CardComposer.jsx'
 import Button from '../ui/Button.jsx'
@@ -120,7 +121,8 @@ function Column({
       )}
 
       <div className={styles.cards}>
-        {cards.map((card) => (
+        <AnimatePresence initial={false}>
+          {cards.map((card) => (
           <Card
             key={card.id}
             card={card}
@@ -130,7 +132,8 @@ function Column({
             canMoveLeft={!isFirst}
             canMoveRight={!isLast}
           />
-        ))}
+          ))}
+        </AnimatePresence>
       </div>
 
       <CardComposer onAdd={(title) => onAddCard(column.id, title)} />
