@@ -17,3 +17,17 @@ export function validateColumnTitle(title, columns, currentId) {
 
   return ''
 }
+
+export function validateRepoName(value) {
+  const name = value.trim()
+
+  if (name === '') {
+    return 'Enter a repository'
+  }
+
+  if (!name.includes('/')) {
+    return 'Use the format owner/repo'
+  }
+
+  return ''
+}

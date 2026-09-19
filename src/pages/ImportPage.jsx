@@ -4,6 +4,7 @@ import Button from '../components/ui/Button.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import ErrorMessage from '../components/ui/ErrorMessage.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
+import { validateRepoName } from '../utils/validation.js'
 import styles from './ImportPage.module.css'
 
 function ImportPage() {
@@ -14,6 +15,14 @@ function ImportPage() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+
+    const invalid = validateRepoName(repo)
+
+    if (invalid) {
+      setError(invalid)
+      setIssues(null)
+      return
+    }
 
     setIsLoading(true)
     setError('')
@@ -28,11 +37,17 @@ function ImportPage() {
         const data = await response.json()
 
         setIssues(data.filter((item) => !item.pull_request))
+      } else if (response.status === 404) {
+        setError('No repository found with that name')
+      } else if (response.status === 403) {
+        setError(
+          "GitHub's hourly limit for anonymous requests is reached. Try again later.",
+        )
       } else {
-        setError('Could not load issues from that repository')
+        setError(`Something went wrong (status ${response.status})`)
       }
     } catch {
-      setError('Could not load issues from that repository')
+      setError("Couldn't reach GitHub. Check your connection.")
     }
 
     setIsLoading(false)
