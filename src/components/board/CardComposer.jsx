@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import Button from '../ui/Button.jsx'
+import { useBoard } from '../../hooks/useBoard.js'
 import styles from './CardComposer.module.css'
 
-function CardComposer({ onAdd }) {
+function CardComposer({ columnId }) {
+  const { addCard } = useBoard()
   const [title, setTitle] = useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
-    onAdd(title.trim())
+    addCard(columnId, title.trim())
     setTitle('')
   }
 

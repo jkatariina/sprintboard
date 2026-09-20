@@ -5,23 +5,14 @@ import CardComposer from './CardComposer.jsx'
 import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
 import Modal from '../ui/Modal.jsx'
+import { useBoard } from '../../hooks/useBoard.js'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
-function Column({
-  column,
-  columns,
-  cards,
-  onRename,
-  onDelete,
-  onAddCard,
-  onUpdateCard,
-  onDeleteCard,
-  onMoveCard,
-  onMove,
-  isFirst,
-  isLast,
-}) {
+function Column({ column, isFirst, isLast }) {
+  const { columns, cards, renameColumn, deleteColumn, moveColumn } = useBoard()
+  const columnCards = cards.filter((card) => card.columnId === column.id)
+
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
   const [title, setTitle] = useState(column.title)
@@ -49,7 +40,7 @@ function Column({
       return
     }
 
-    onRename(column.id, title.trim())
+    renameColumn(column.id, title.trim())
     setError('')
     setIsEditing(false)
   }
@@ -62,7 +53,7 @@ function Column({
 
   function confirmDelete() {
     setIsConfirming(false)
-    onDelete(column.id)
+    deleteColumn(column.id)
   }
 
   return (
@@ -91,7 +82,7 @@ function Column({
             <button
               type="button"
               className={styles.action}
-              onClick={() => onMove(column.id, -1)}
+              onClick={() => moveColumn(column.id, -1)}
               disabled={isFirst}
               aria-label={`Move ${column.title} left`}
             >
@@ -101,7 +92,7 @@ function Column({
             <button
               type="button"
               className={styles.action}
-              onClick={() => onMove(column.id, 1)}
+              onClick={() => moveColumn(column.id, 1)}
               disabled={isLast}
               aria-label={`Move ${column.title} right`}
             >
@@ -122,21 +113,18 @@ function Column({
 
       <div className={styles.cards}>
         <AnimatePresence initial={false}>
-          {cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            onUpdate={onUpdateCard}
-            onDelete={onDeleteCard}
-            onMove={onMoveCard}
-            canMoveLeft={!isFirst}
-            canMoveRight={!isLast}
-          />
+          {columnCards.map((card) => (
+            <Card
+              key={card.id}
+              card={card}
+              canMoveLeft={!isFirst}
+              canMoveRight={!isLast}
+            />
           ))}
         </AnimatePresence>
       </div>
 
-      <CardComposer onAdd={(title) => onAddCard(column.id, title)} />
+      <CardComposer columnId={column.id} />
 
       <Modal
         isOpen={isConfirming}

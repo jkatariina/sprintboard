@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Button from '../ui/Button.jsx'
 import ErrorMessage from '../ui/ErrorMessage.jsx'
+import { useBoard } from '../../hooks/useBoard.js'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './ColumnForm.module.css'
 
-function ColumnForm({ columns, onAdd }) {
+function ColumnForm() {
+  const { columns, addColumn } = useBoard()
   const [title, setTitle] = useState('')
   const [error, setError] = useState('')
 
@@ -18,7 +20,7 @@ function ColumnForm({ columns, onAdd }) {
       return
     }
 
-    onAdd(title.trim())
+    addColumn(title.trim())
     setTitle('')
     setError('')
   }
