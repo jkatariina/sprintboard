@@ -86,6 +86,26 @@ export function BoardProvider({ children }) {
     setCards([...cards, { id: crypto.randomUUID(), columnId, title }])
   }
 
+  function importIssues(columnId, issues) {
+    const imported = issues
+      .filter((issue) => !cards.some((card) => card.id === `gh-${issue.id}`))
+      .map((issue) => ({
+        id: `gh-${issue.id}`,
+        columnId,
+        title: issue.title,
+        description: issue.body ? issue.body.slice(0, 500) : '',
+        label: issue.labels[0] ? issue.labels[0].name : '',
+        assignee: issue.user.login,
+        dueDate: '',
+        githubUrl: issue.html_url,
+        githubNumber: issue.number,
+      }))
+
+    setCards([...cards, ...imported])
+
+    return imported.length
+  }
+
   function updateCard(id, changes) {
     setCards(
       cards.map((card) => (card.id === id ? { ...card, ...changes } : card)),
@@ -116,6 +136,7 @@ export function BoardProvider({ children }) {
     moveColumn,
     deleteColumn,
     addCard,
+    importIssues,
     updateCard,
     deleteCard,
     moveCard,
