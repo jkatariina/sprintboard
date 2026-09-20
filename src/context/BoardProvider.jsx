@@ -42,6 +42,7 @@ function loadCards() {
 export function BoardProvider({ children }) {
   const [columns, setColumns] = useState(loadColumns)
   const [cards, setCards] = useState(loadCards)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     localStorage.setItem(columnsKey, JSON.stringify(columns))
@@ -131,6 +132,8 @@ export function BoardProvider({ children }) {
   const value = {
     columns,
     cards,
+    query,
+    setQuery,
     addColumn,
     renameColumn,
     moveColumn,
