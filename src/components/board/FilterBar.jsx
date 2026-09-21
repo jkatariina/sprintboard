@@ -29,7 +29,7 @@ function getAssignees(cards) {
 function FilterBar() {
   const {
     cards,
-    query,
+    isFiltering,
     labelFilter,
     setLabelFilter,
     assigneeFilter,
@@ -39,8 +39,6 @@ function FilterBar() {
 
   const labels = getLabels(cards)
   const assignees = getAssignees(cards)
-
-  const isFiltering = query !== '' || labelFilter !== '' || assigneeFilter !== ''
 
   return (
     <div className={styles.bar}>

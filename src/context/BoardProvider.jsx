@@ -46,6 +46,24 @@ export function BoardProvider({ children }) {
   const [labelFilter, setLabelFilter] = useState('')
   const [assigneeFilter, setAssigneeFilter] = useState('')
 
+  const visibleCards = cards.filter((card) => {
+    if (labelFilter !== '' && card.label !== labelFilter) {
+      return false
+    }
+
+    if (assigneeFilter !== '' && card.assignee !== assigneeFilter) {
+      return false
+    }
+
+    if (query !== '' && !card.title.toLowerCase().includes(query.toLowerCase())) {
+      return false
+    }
+
+    return true
+  })
+
+  const isFiltering = query !== '' || labelFilter !== '' || assigneeFilter !== ''
+
   function clearFilters() {
     setQuery('')
     setLabelFilter('')
@@ -140,6 +158,8 @@ export function BoardProvider({ children }) {
   const value = {
     columns,
     cards,
+    visibleCards,
+    isFiltering,
     query,
     setQuery,
     labelFilter,

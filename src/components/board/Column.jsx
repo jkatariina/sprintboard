@@ -10,36 +10,10 @@ import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
 function Column({ column, isFirst, isLast }) {
-  const {
-    columns,
-    cards,
-    query,
-    labelFilter,
-    assigneeFilter,
-    renameColumn,
-    deleteColumn,
-    moveColumn,
-  } = useBoard()
+  const { columns, visibleCards, renameColumn, deleteColumn, moveColumn } =
+    useBoard()
 
-  const columnCards = cards.filter((card) => {
-    if (card.columnId !== column.id) {
-      return false
-    }
-
-    if (labelFilter !== '' && card.label !== labelFilter) {
-      return false
-    }
-
-    if (assigneeFilter !== '' && card.assignee !== assigneeFilter) {
-      return false
-    }
-
-    if (query !== '' && !card.title.toLowerCase().includes(query.toLowerCase())) {
-      return false
-    }
-
-    return true
-  })
+  const columnCards = visibleCards.filter((card) => card.columnId === column.id)
 
   const [isEditing, setIsEditing] = useState(false)
   const [isConfirming, setIsConfirming] = useState(false)
