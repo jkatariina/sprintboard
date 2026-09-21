@@ -43,6 +43,14 @@ export function BoardProvider({ children }) {
   const [columns, setColumns] = useState(loadColumns)
   const [cards, setCards] = useState(loadCards)
   const [query, setQuery] = useState('')
+  const [labelFilter, setLabelFilter] = useState('')
+  const [assigneeFilter, setAssigneeFilter] = useState('')
+
+  function clearFilters() {
+    setQuery('')
+    setLabelFilter('')
+    setAssigneeFilter('')
+  }
 
   useEffect(() => {
     localStorage.setItem(columnsKey, JSON.stringify(columns))
@@ -134,6 +142,11 @@ export function BoardProvider({ children }) {
     cards,
     query,
     setQuery,
+    labelFilter,
+    setLabelFilter,
+    assigneeFilter,
+    setAssigneeFilter,
+    clearFilters,
     addColumn,
     renameColumn,
     moveColumn,
