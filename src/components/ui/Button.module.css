@@ -39,3 +39,10 @@
 .danger:hover:not(:disabled) {
   filter: brightness(1.08);
 }
+
+
+@media (hover: none) {
+  .button {
+    min-height: 2.75rem;
+  }
+}
