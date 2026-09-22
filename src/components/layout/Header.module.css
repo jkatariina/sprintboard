@@ -61,3 +61,34 @@
   color: var(--color-accent);
   font-weight: 600;
 }
+
+@media (max-width: 40rem) {
+  .inner {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .brand {
+    order: 1;
+  }
+
+  .nav {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
+@media (hover: none) {
+  .link {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}
