@@ -34,6 +34,8 @@ function FilterBar() {
     setLabelFilter,
     assigneeFilter,
     setAssigneeFilter,
+    sort,
+    setSort,
     clearFilters,
   } = useBoard()
 
@@ -75,6 +77,20 @@ function FilterBar() {
               {assignee}
             </option>
           ))}
+        </select>
+      </label>
+
+      <label className={styles.field}>
+        <span className={styles.label}>Sort</span>
+
+        <select
+          className={styles.input}
+          value={sort}
+          onChange={(event) => setSort(event.target.value)}
+        >
+          <option value="">Order added</option>
+          <option value="title">Title A&ndash;Z</option>
+          <option value="dueDate">Due date</option>
         </select>
       </label>
 

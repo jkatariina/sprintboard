@@ -45,8 +45,9 @@ export function BoardProvider({ children }) {
   const [query, setQuery] = useState('')
   const [labelFilter, setLabelFilter] = useState('')
   const [assigneeFilter, setAssigneeFilter] = useState('')
+  const [sort, setSort] = useState('')
 
-  const visibleCards = cards.filter((card) => {
+  const matching = cards.filter((card) => {
     if (labelFilter !== '' && card.label !== labelFilter) {
       return false
     }
@@ -61,6 +62,32 @@ export function BoardProvider({ children }) {
 
     return true
   })
+
+  function byDueDate(a, b) {
+    if (a.dueDate === '' && b.dueDate === '') {
+      return 0
+    }
+
+    if (a.dueDate === '') {
+      return 1
+    }
+
+    if (b.dueDate === '') {
+      return -1
+    }
+
+    return a.dueDate.localeCompare(b.dueDate)
+  }
+
+  let visibleCards = matching
+
+  if (sort === 'title') {
+    visibleCards = [...matching].sort((a, b) => a.title.localeCompare(b.title))
+  }
+
+  if (sort === 'dueDate') {
+    visibleCards = [...matching].sort(byDueDate)
+  }
 
   const isFiltering = query !== '' || labelFilter !== '' || assigneeFilter !== ''
 
@@ -160,6 +187,8 @@ export function BoardProvider({ children }) {
     cards,
     visibleCards,
     isFiltering,
+    sort,
+    setSort,
     query,
     setQuery,
     labelFilter,
