@@ -42,6 +42,60 @@ function loadCards() {
 export function BoardProvider({ children }) {
   const [columns, setColumns] = useState(loadColumns)
   const [cards, setCards] = useState(loadCards)
+  const [query, setQuery] = useState('')
+  const [labelFilter, setLabelFilter] = useState('')
+  const [assigneeFilter, setAssigneeFilter] = useState('')
+  const [sort, setSort] = useState('')
+
+  const matching = cards.filter((card) => {
+    if (labelFilter !== '' && card.label !== labelFilter) {
+      return false
+    }
+
+    if (assigneeFilter !== '' && card.assignee !== assigneeFilter) {
+      return false
+    }
+
+    if (query !== '' && !card.title.toLowerCase().includes(query.toLowerCase())) {
+      return false
+    }
+
+    return true
+  })
+
+  function byDueDate(a, b) {
+    if (a.dueDate === '' && b.dueDate === '') {
+      return 0
+    }
+
+    if (a.dueDate === '') {
+      return 1
+    }
+
+    if (b.dueDate === '') {
+      return -1
+    }
+
+    return a.dueDate.localeCompare(b.dueDate)
+  }
+
+  let visibleCards = matching
+
+  if (sort === 'title') {
+    visibleCards = [...matching].sort((a, b) => a.title.localeCompare(b.title))
+  }
+
+  if (sort === 'dueDate') {
+    visibleCards = [...matching].sort(byDueDate)
+  }
+
+  const isFiltering = query !== '' || labelFilter !== '' || assigneeFilter !== ''
+
+  function clearFilters() {
+    setQuery('')
+    setLabelFilter('')
+    setAssigneeFilter('')
+  }
 
   useEffect(() => {
     localStorage.setItem(columnsKey, JSON.stringify(columns))
@@ -131,6 +185,17 @@ export function BoardProvider({ children }) {
   const value = {
     columns,
     cards,
+    visibleCards,
+    isFiltering,
+    sort,
+    setSort,
+    query,
+    setQuery,
+    labelFilter,
+    setLabelFilter,
+    assigneeFilter,
+    setAssigneeFilter,
+    clearFilters,
     addColumn,
     renameColumn,
     moveColumn,

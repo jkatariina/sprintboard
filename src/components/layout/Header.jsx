@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
+import { useBoard } from '../../hooks/useBoard.js'
 import styles from './Header.module.css'
 
 function navLinkClass({ isActive }) {
@@ -7,6 +8,8 @@ function navLinkClass({ isActive }) {
 }
 
 function Header() {
+  const { query, setQuery } = useBoard()
+
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
@@ -14,6 +17,15 @@ function Header() {
           <img src={logo} alt="" className={styles.logo} />
           Sprintboard
         </Link>
+
+        <input
+          className={styles.search}
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search cards"
+          aria-label="Search cards"
+        />
 
         <nav className={styles.nav} aria-label="Main">
           <NavLink to="/import" className={navLinkClass}>
