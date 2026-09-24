@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 const storageKey = 'sprintboard.theme'
 
-function loadTheme() {
+export function loadTheme() {
   const saved = localStorage.getItem(storageKey)
 
   if (saved === 'light' || saved === 'dark') {
