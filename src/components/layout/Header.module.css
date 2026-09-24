@@ -20,12 +20,6 @@
   text-decoration: none;
 }
 
-.logo {
-  display: block;
-  height: 2rem;
-  width: 2rem;
-}
-
 .search {
   flex: 1;
   min-width: 0;
@@ -38,6 +32,45 @@
   color: var(--color-text);
   font: inherit;
   font-size: 0.875rem;
+}
+
+.logo {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.theme {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background-color: var(--color-surface-muted);
+}
+
+.knob {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 50%;
+  background-color: var(--color-text-muted);
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.themeOn .knob {
+  transform: translateX(1.125rem);
+  background-color: var(--color-accent-fill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knob {
+    transition: none;
+  }
 }
 
 .nav {
@@ -72,13 +105,23 @@
     order: 1;
   }
 
-  .nav {
+  .logo {
+  display: block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.theme {
     order: 2;
+  }
+
+  .nav {
+    order: 3;
     margin-left: auto;
   }
 
   .search {
-    order: 3;
+    order: 4;
     flex-basis: 100%;
     max-width: none;
     margin-left: 0;

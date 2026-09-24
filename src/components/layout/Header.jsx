@@ -1,6 +1,8 @@
 import { Link, NavLink } from 'react-router-dom'
-import logo from '../../assets/logo.svg'
+import logoDark from '../../assets/logo-dark.svg'
+import logoLight from '../../assets/logo-light.svg'
 import { useBoard } from '../../hooks/useBoard.js'
+import { useTheme } from '../../hooks/useTheme.js'
 import styles from './Header.module.css'
 
 function navLinkClass({ isActive }) {
@@ -9,12 +11,17 @@ function navLinkClass({ isActive }) {
 
 function Header() {
   const { query, setQuery } = useBoard()
+  const [theme, setTheme] = useTheme()
 
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link to="/" className={styles.brand}>
-          <img src={logo} alt="" className={styles.logo} />
+          <img
+            src={theme === 'dark' ? logoDark : logoLight}
+            alt=""
+            className={styles.logo}
+          />
           Sprintboard
         </Link>
 
@@ -26,6 +33,17 @@ function Header() {
           placeholder="Search cards"
           aria-label="Search cards"
         />
+
+        <button
+          type="button"
+          className={`${styles.theme} ${theme === 'dark' ? styles.themeOn : ''}`}
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          role="switch"
+          aria-checked={theme === 'dark'}
+          aria-label="Dark mode"
+        >
+          <span className={styles.knob} />
+        </button>
 
         <nav className={styles.nav} aria-label="Main">
           <NavLink to="/import" className={navLinkClass}>
