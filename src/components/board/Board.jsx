@@ -90,6 +90,7 @@ function Board() {
         <Column
           key={column.id}
           column={column}
+          index={index}
           isFirst={index === 0}
           isLast={index === columns.length - 1}
         />
