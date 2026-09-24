@@ -2,16 +2,14 @@ import { Link, NavLink } from 'react-router-dom'
 import logoDark from '../../assets/logo-dark.svg'
 import logoLight from '../../assets/logo-light.svg'
 import { useBoard } from '../../hooks/useBoard.js'
-import { useTheme } from '../../hooks/useTheme.js'
 import styles from './Header.module.css'
 
 function navLinkClass({ isActive }) {
   return isActive ? `${styles.link} ${styles.active}` : styles.link
 }
 
-function Header() {
+function Header({ theme, setTheme }) {
   const { query, setQuery } = useBoard()
-  const [theme, setTheme] = useTheme()
 
   return (
     <header className={styles.header}>

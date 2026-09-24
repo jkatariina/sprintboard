@@ -9,7 +9,9 @@ import { useBoard } from '../../hooks/useBoard.js'
 import { validateColumnTitle } from '../../utils/validation.js'
 import styles from './Column.module.css'
 
-function Column({ column, isFirst, isLast }) {
+const isSmallScreen = window.matchMedia('(max-width: 40rem)').matches
+
+function Column({ column, index, isFirst, isLast }) {
   const { columns, visibleCards, renameColumn, deleteColumn, moveColumn } =
     useBoard()
 
@@ -63,6 +65,12 @@ function Column({ column, isFirst, isLast }) {
       layout
       className={styles.column}
       data-column-id={column.id}
+      initial={isSmallScreen ? false : { opacity: 0, y: 12 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.35, delay: index * 0.09 },
+      }}
     >
       {isEditing ? (
         <form className={styles.form} onSubmit={save}>
