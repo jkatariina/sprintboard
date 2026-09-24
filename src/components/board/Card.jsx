@@ -45,8 +45,7 @@ function Card({ card, canMoveLeft, canMoveRight }) {
       const inside =
         event.clientX >= rect.left &&
         event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom
+        event.clientY >= rect.top
 
       if (inside) {
         moveCardToColumn(card.id, node.dataset.columnId)
