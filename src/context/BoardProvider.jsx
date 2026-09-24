@@ -46,6 +46,7 @@ export function BoardProvider({ children }) {
   const [labelFilter, setLabelFilter] = useState('')
   const [assigneeFilter, setAssigneeFilter] = useState('')
   const [sort, setSort] = useState('')
+  const [isDragging, setIsDragging] = useState(false)
 
   const matching = cards.filter((card) => {
     if (labelFilter !== '' && card.label !== labelFilter) {
@@ -170,6 +171,10 @@ export function BoardProvider({ children }) {
     setCards(cards.filter((card) => card.id !== id))
   }
 
+  function moveCardToColumn(id, columnId) {
+    updateCard(id, { columnId })
+  }
+
   function moveCard(id, direction) {
     const card = cards.find((item) => item.id === id)
     const index = columns.findIndex((column) => column.id === card.columnId)
@@ -205,6 +210,9 @@ export function BoardProvider({ children }) {
     updateCard,
     deleteCard,
     moveCard,
+    moveCardToColumn,
+    isDragging,
+    setIsDragging,
   }
 
   return <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

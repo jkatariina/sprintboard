@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion } from 'motion/react'
 import Avatar from '../ui/Avatar.jsx'
 import Badge from '../ui/Badge.jsx'
@@ -10,8 +10,10 @@ import { isOverdue } from '../../utils/dates.js'
 import styles from './Card.module.css'
 
 function Card({ card, canMoveLeft, canMoveRight }) {
-  const { updateCard, deleteCard, moveCard } = useBoard()
+  const { updateCard, deleteCard, moveCard, moveCardToColumn, setIsDragging } =
+    useBoard()
   const [isOpen, setIsOpen] = useState(false)
+  const dragged = useRef(false)
   const [isConfirming, setIsConfirming] = useState(false)
 
   function close() {
@@ -22,6 +24,35 @@ function Card({ card, canMoveLeft, canMoveRight }) {
   function save(changes) {
     updateCard(card.id, changes)
     close()
+  }
+
+  function handleOpen() {
+    if (dragged.current) {
+      return
+    }
+
+    setIsOpen(true)
+  }
+
+  function handleDragEnd(event) {
+    setIsDragging(false)
+
+    const columns = document.querySelectorAll('[data-column-id]')
+
+    for (const node of columns) {
+      const rect = node.getBoundingClientRect()
+
+      const inside =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+
+      if (inside) {
+        moveCardToColumn(card.id, node.dataset.columnId)
+        return
+      }
+    }
   }
 
   function remove() {
@@ -37,11 +68,24 @@ function Card({ card, canMoveLeft, canMoveRight }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.18 }}
+      drag
+      dragSnapToOrigin
+      dragMomentum={false}
+      dragElastic={0.2}
+      whileDrag={{ scale: 1.03, zIndex: 10, cursor: 'grabbing' }}
+      onPointerDown={() => {
+        dragged.current = false
+      }}
+      onDragStart={() => {
+        dragged.current = true
+        setIsDragging(true)
+      }}
+      onDragEnd={handleDragEnd}
     >
       <button
         type="button"
         className={styles.open}
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpen}
       >
         <span className={styles.title}>{card.title}</span>
 

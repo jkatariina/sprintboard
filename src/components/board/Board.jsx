@@ -6,7 +6,9 @@ import { useBoard } from '../../hooks/useBoard.js'
 import styles from './Board.module.css'
 
 function Board() {
-  const { columns, visibleCards, isFiltering, clearFilters } = useBoard()
+  const { columns, visibleCards, isFiltering, isDragging, clearFilters } =
+    useBoard()
+
 
   if (isFiltering && visibleCards.length === 0) {
     return (
@@ -33,7 +35,10 @@ function Board() {
   }
 
   return (
-    <div className={styles.board}>
+    <div
+      className={styles.board}
+      data-dragging={isDragging ? 'true' : undefined}
+    >
       {columns.map((column, index) => (
         <Column
           key={column.id}
