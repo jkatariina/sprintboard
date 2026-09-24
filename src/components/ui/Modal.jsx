@@ -1,8 +1,37 @@
+import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import styles from './Modal.module.css'
 
 function Modal({ isOpen, onClose, title, children }) {
+  const panel = useRef(null)
+  const opener = useRef(null)
+
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    opener.current = document.activeElement
+    panel.current.focus()
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+
+      if (opener.current) {
+        opener.current.focus()
+      }
+    }
+  }, [isOpen, onClose])
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -14,6 +43,8 @@ function Modal({ isOpen, onClose, title, children }) {
           exit={{ opacity: 0 }}
         >
           <motion.div
+            ref={panel}
+            tabIndex={-1}
             className={styles.panel}
             role="dialog"
             aria-modal="true"
