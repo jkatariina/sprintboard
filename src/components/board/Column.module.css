@@ -1,5 +1,7 @@
 .column {
   flex: 0 0 16rem;
+  width: 16rem;
+  min-width: 0;
   max-height: 100%;
   padding: var(--space-md);
   border: 1px solid var(--color-border);
@@ -129,4 +131,12 @@
     width: 2.75rem;
     height: 2.75rem;
   }
+}
+
+[data-dragging] .column {
+  max-height: none;
+}
+
+[data-dragging] .cards {
+  overflow: visible;
 }

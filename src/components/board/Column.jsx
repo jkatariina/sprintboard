@@ -59,7 +59,11 @@ function Column({ column, isFirst, isLast }) {
   }
 
   return (
-    <motion.section layout className={styles.column}>
+    <motion.section
+      layout
+      className={styles.column}
+      data-column-id={column.id}
+    >
       {isEditing ? (
         <form className={styles.form} onSubmit={save}>
           <input
