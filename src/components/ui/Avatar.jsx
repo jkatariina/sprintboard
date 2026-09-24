@@ -12,7 +12,7 @@ function initials(name) {
 
 function Avatar({ name }) {
   return (
-    <span className={styles.avatar} title={name}>
+    <span className={styles.avatar} title={name} role="img" aria-label={name}>
       {initials(name)}
     </span>
   )
