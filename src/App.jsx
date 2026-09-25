@@ -8,7 +8,6 @@ import { useTheme } from './hooks/useTheme.js'
 import BoardPage from './pages/BoardPage.jsx'
 import ImportPage from './pages/ImportPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
-import StyleguidePage from './pages/StyleguidePage.jsx'
 
 function App() {
   const [isReady, setIsReady] = useState(false)
@@ -28,7 +27,6 @@ function App() {
                 <Routes>
                   <Route path="/" element={<BoardPage />} />
                   <Route path="/import" element={<ImportPage />} />
-                  <Route path="/ui" element={<StyleguidePage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </main>
