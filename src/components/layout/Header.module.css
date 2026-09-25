@@ -105,13 +105,7 @@
     order: 1;
   }
 
-  .logo {
-  display: block;
-  height: 2rem;
-  width: 2rem;
-}
-
-.theme {
+  .theme {
     order: 2;
   }
 
