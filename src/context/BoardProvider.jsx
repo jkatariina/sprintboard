@@ -132,6 +132,23 @@ export function BoardProvider({ children }) {
     setColumns(next)
   }
 
+  function moveColumnTo(id, targetId) {
+    if (id === targetId) {
+      return
+    }
+
+    const moved = columns.find((column) => column.id === id)
+    const target = columns.findIndex((column) => column.id === targetId)
+
+    if (!moved || target === -1) {
+      return
+    }
+
+    const next = columns.filter((column) => column.id !== id)
+    next.splice(target, 0, moved)
+    setColumns(next)
+  }
+
   function deleteColumn(id) {
     setColumns(columns.filter((column) => column.id !== id))
     setCards(cards.filter((card) => card.columnId !== id))
@@ -204,6 +221,7 @@ export function BoardProvider({ children }) {
     addColumn,
     renameColumn,
     moveColumn,
+    moveColumnTo,
     deleteColumn,
     addCard,
     importIssues,
