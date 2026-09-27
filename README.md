@@ -8,7 +8,7 @@ Course project for JavaScript 3.
 
 ## Features
 
-- Create, rename, reorder and delete columns
+- Create, rename and delete columns, and reorder them by dragging the column header
 - Cards with a title, description, label, assignee and due date
 - Drag cards between columns, or move them with the arrows
 - Import open issues from a public GitHub repository
@@ -55,7 +55,8 @@ Beyond the shared requirements:
   issues, and an import attempted before any column exists
 - Reusable UI components and two custom hooks, `useBoard` and `useTheme`
 - Works down to phone size, with larger controls where there is no hover
-- Drag and drop, search, filtering by label and assignee, sorting, light and dark theme
+- Drag and drop for both cards and columns, search, filtering by label and assignee,
+  sorting, light and dark theme
 - One branch and one pull request per feature, with descriptive commit messages
 
 ## Deploy
