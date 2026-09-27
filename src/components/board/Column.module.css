@@ -33,6 +33,17 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  .header {
+    cursor: grab;
+  }
+
+  .header:active {
+    cursor: grabbing;
+  }
 }
 
 .arrows {

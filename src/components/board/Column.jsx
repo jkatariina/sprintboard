@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion, useDragControls } from 'motion/react'
 import Card from './Card.jsx'
 import CardComposer from './CardComposer.jsx'
 import Button from '../ui/Button.jsx'
@@ -12,8 +12,14 @@ import styles from './Column.module.css'
 const isSmallScreen = window.matchMedia('(max-width: 40rem)').matches
 
 function Column({ column, index, isFirst, isLast }) {
-  const { columns, visibleCards, renameColumn, deleteColumn, moveColumn } =
-    useBoard()
+  const {
+    columns,
+    visibleCards,
+    renameColumn,
+    deleteColumn,
+    moveColumn,
+    moveColumnTo,
+  } = useBoard()
 
   const columnCards = visibleCards.filter((card) => card.columnId === column.id)
 
@@ -22,7 +28,36 @@ function Column({ column, index, isFirst, isLast }) {
   const [title, setTitle] = useState(column.title)
   const [error, setError] = useState('')
 
+  const dragControls = useDragControls()
+  const dragged = useRef(false)
+
+  function startDrag(event) {
+    dragged.current = false
+    dragControls.start(event)
+  }
+
+  function handleDragEnd(event) {
+    const others = document.querySelectorAll('[data-column-id]')
+
+    for (const node of others) {
+      if (node.dataset.columnId === column.id) {
+        continue
+      }
+
+      const rect = node.getBoundingClientRect()
+
+      if (event.clientX >= rect.left && event.clientX <= rect.right) {
+        moveColumnTo(column.id, node.dataset.columnId)
+        return
+      }
+    }
+  }
+
   function startEditing() {
+    if (dragged.current) {
+      return
+    }
+
     setTitle(column.title)
     setError('')
     setIsEditing(true)
@@ -71,6 +106,17 @@ function Column({ column, index, isFirst, isLast }) {
         y: 0,
         transition: { duration: 0.35, delay: index * 0.09 },
       }}
+      drag="x"
+      dragListener={false}
+      dragControls={dragControls}
+      dragSnapToOrigin
+      dragMomentum={false}
+      dragElastic={0.2}
+      whileDrag={{ scale: 1.02, zIndex: 10 }}
+      onDragStart={() => {
+        dragged.current = true
+      }}
+      onDragEnd={handleDragEnd}
     >
       {isEditing ? (
         <form className={styles.form} onSubmit={save}>
@@ -87,7 +133,11 @@ function Column({ column, index, isFirst, isLast }) {
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </form>
       ) : (
-        <div className={styles.header}>
+        <div
+          className={styles.header}
+          onPointerDown={startDrag}
+          style={{ touchAction: 'none' }}
+        >
           <button type="button" className={styles.title} onClick={startEditing}>
             {column.title}
           </button>
